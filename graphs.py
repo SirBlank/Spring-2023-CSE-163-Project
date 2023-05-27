@@ -1,11 +1,17 @@
 import pandas as pd
-import plotly.express as px
-import plotly.io as pio
+import matplotlib.pyplot as plt
 
-files = ['num_posts_and_sentiment_summary_2012.csv', 'num_posts_and_sentiment_summary_2013.csv', 'num_posts_and_sentiment_summary_2014.csv', 
-         'num_posts_and_sentiment_summary_2015.csv', 'num_posts_and_sentiment_summary_2016.csv', 'num_posts_and_sentiment_summary_2017.csv', 
-         'num_posts_and_sentiment_summary_2018.csv', 'num_posts_and_sentiment_summary_2019.csv', 'num_posts_and_sentiment_summary_2020.csv', 
-         'num_posts_and_sentiment_summary_2021.csv', 'num_posts_and_sentiment_summary_2022.csv']
+files = ['/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2012.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2013.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2014.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2015.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2016.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2017.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2018.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2019.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2020.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2021.csv',
+         '/Users/slin7/Downloads/sentiment/graphs/num_posts_and_sentiment_summary_2022.csv']
 
 df = pd.DataFrame()
 
@@ -16,19 +22,32 @@ for file in files:
 df.to_csv('merged_files.csv', index=False)
 merged_data = pd.read_csv('merged_files.csv')
 
-# change date to just year
-# merged_data["DATE"] = pd.to_datetime(merged_data["DATE"])
+# Convert 'DATE' column to datetime
+merged_data["DATE"] = pd.to_datetime(merged_data["DATE"])
 # merged_data["YEAR"] = merged_data["DATE"].dt.year
 
-# interactive line plot
-fig = px.line(merged_data, x='DATE', y='SCORE', title='Sentiment Score')
+# Group the data by year and calculate the mean sentiment score
+yearly_score_data = merged_data.groupby('DATE')['SCORE'].mean()
 
-fig.update_layout(xaxis_title='Date', yaxis_title='Sentiment Score')
+# Plot the time series
+plt.plot(yearly_score_data.index, yearly_score_data.values)
 
-pio.write_image(fig, 'sentiment_score.png')
+# Add labels and title
+plt.xlabel('Year')
+plt.ylabel('Sentiment Score')
+plt.title('Sentiment Score')
 
-fig2 = px.line(merged_data, x='DATE', y='N', title='Daily Number of Posts')
+plt.savefig('sentiment_scores.png', bbox_inches='tight')
 
-fig2.update_layout(xaxis_title='Date', yaxis_title='Posts')
+# Group the data by year and calculate the mean posts
+yearly_posts_data = merged_data.groupby('DATE')['N'].mean()
 
-pio.write_image(fig2, 'posts.png')
+# Plot the time series
+plt.plot(yearly_posts_data.index, yearly_posts_data.values)
+
+# Add labels and title
+plt.xlabel('Year')
+plt.ylabel('Posts')
+plt.title('Daily Number of Post')
+
+plt.savefig('posts.png', bbox_inches='tight')
