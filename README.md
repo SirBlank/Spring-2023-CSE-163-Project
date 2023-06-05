@@ -4,8 +4,6 @@ pip install pandas
 
 pip install numpy  
 
-pip install math  
-
 pip install string  
 
 pip install matplotlib  
