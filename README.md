@@ -15,3 +15,5 @@ pip install scikit-learn
 pip install scipy  
 
 pip install typing  
+
+pip install os
