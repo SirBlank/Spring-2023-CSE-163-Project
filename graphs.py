@@ -36,34 +36,39 @@ def processing() -> pd.Series:
     return yearly_score_data, yearly_posts_data
 
 
-def plot_sentiment_scores(yearly_score_data: pd.Series) -> None:
+def plot_sentiment_scores(yearly_score_data: pd.Series,
+                          image_name: str) -> None:
     '''
     Generates a line plot to visualize the time series of sentiment scores,
     returns None
     '''
+    plt.figure()  # Create a new figure
     # Plot the time series
     plt.plot(yearly_score_data.index, yearly_score_data.values)
     # Add labels and title
     plt.xlabel('Year')
     plt.ylabel('Sentiment Score')
-    plt.title('Sentiment Score')
+    plt.title('Global Averaged Sentiment Scores by Date for Tweets Related to \
+Climate Change 2012-2022')
 
-    plt.savefig('sentiment_scores.png', bbox_inches='tight')
+    plt.savefig(image_name, bbox_inches='tight')
 
 
-def plot_posts(yearly_posts_data: pd.Series) -> None:
+def plot_posts(yearly_posts_data: pd.Series, image_name: str) -> None:
     '''
     Generates a line plot to visualize the time series of number of posts,
     returns None
     '''
+    plt.figure()  # Create a new figure
     # Plot the time series
     plt.plot(yearly_posts_data.index, yearly_posts_data.values)
     # Add labels and title
     plt.xlabel('Year')
     plt.ylabel('Posts')
-    plt.title('Daily Number of Post')
+    plt.title('Global Averaged Number of Tweets by Date for Tweets Related to \
+Climate Change 2012-2022')
 
-    plt.savefig('posts.png', bbox_inches='tight')
+    plt.savefig(image_name, bbox_inches='tight')
 
 
 def test_merge_files() -> None:
@@ -91,20 +96,22 @@ def test_plot_sentiment_scores() -> None:
     '''
     Tests the function sentiment_scores, returns None
     '''
+    plt.figure()
     merge_files(['num_posts_and_sentiment_summary_2012.csv'])
-    yearly_score_data = processing()
-    plot_sentiment_scores(yearly_score_data)
-    assert os.path.exists('sentiment_scores.png')
+    yearly_score_data, yearly_posts_data = processing()
+    plot_sentiment_scores(yearly_score_data, 'test_sentiment_scores.png')
+    assert os.path.exists('test_sentiment_scores.png')
 
 
 def test_plot_posts() -> None:
     '''
     Tests the function plot_posts, returns None
     '''
+    plt.figure()
     merge_files(['num_posts_and_sentiment_summary_2012.csv'])
-    yearly_posts_data = processing()
-    plot_posts(yearly_posts_data)
-    assert os.path.exists('posts.png')
+    yearly_score_data, yearly_posts_data = processing()
+    plot_posts(yearly_posts_data, 'test_posts.png')
+    assert os.path.exists('test_posts.png')
 
 
 def run_tests() -> None:
@@ -132,8 +139,8 @@ def main():
              'num_posts_and_sentiment_summary_2022.csv']
     merge_files(files)
     yearly_score_data, yearly_posts_data = processing()
-    plot_sentiment_scores(yearly_score_data)
-    plot_posts(yearly_posts_data)
+    plot_sentiment_scores(yearly_score_data, 'sentiment_scores.png')
+    plot_posts(yearly_posts_data, 'posts.png')
     run_tests()
 
 
