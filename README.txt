@@ -1,7 +1,7 @@
 **THIS PROJECT CANNOT BE RAN DIRECTLY ON ED WORKSPACE**
 
 
-Instructions on how to this project:
+Instructions on how to run this project:
 
 STEP 1: Clone our git repo!
 https://github.com/SirBlank/Spring-2023-CSE-163-Project.git
