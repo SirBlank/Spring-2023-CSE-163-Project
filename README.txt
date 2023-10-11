@@ -24,7 +24,7 @@ STEP 2: Install packages
 - scipy
 - typing
 
-2. Run the following pip commands on command line
+2. If not, run the following pip commands on command line
 pip install pandas
 pip install geopandas
 pip install numpy
