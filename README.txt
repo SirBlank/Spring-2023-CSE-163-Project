@@ -1,5 +1,6 @@
 **THIS PROJECT CANNOT BE RAN DIRECTLY ON ED WORKSPACE**
 
+Sentiment Analysis on Twitter and Reddit Data Towards Climate Change.
 
 Instructions on how to run this project:
 
